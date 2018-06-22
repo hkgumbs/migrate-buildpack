@@ -1,0 +1,25 @@
+#!/bin/bash
+# bin/compile <build-dir> <cache-dir> <env-dir>
+
+set -e            # fail fast
+set -o pipefail   # do not ignore exit codes when piping output
+
+# Heroku-provided params
+BUILD_DIR="$1"
+CACHE_DIR="$2"
+ENV_DIR="$3"
+
+# Setup envioronment
+DB_URI="$(cat $ENV_DIR/DB_URI)"
+MIGRATE_VER="$(cat $ENV_DIR/MIGRATE_VER || echo v3.3.0)"
+BIN="$CACHE_DIR/migrate-${MIGRATE_VER}"
+
+# Download binary (unless cached)
+if [[ ! -x "$BIN" ]]
+then
+  curl -L "https://github.com/golang-migrate/migrate/releases/download/$MIGRATE_VER/migrate.linux-amd64.tar.gz" | tar xvz
+  mv migrate.linux-amd64 "$BIN"
+fi
+
+# Run migrations
+"$BIN" -path ${BUILD_DIR}/db/migrate -database ${DB_URI} up

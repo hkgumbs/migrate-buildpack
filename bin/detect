@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo "MIGRATE" && exit 0
