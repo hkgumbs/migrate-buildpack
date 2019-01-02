@@ -11,7 +11,7 @@ ENV_DIR="$3"
 
 # Setup envioronment
 DB_URI="$(cat $ENV_DIR/DB_URI)"
-MIGRATE_VER="$(cat $ENV_DIR/MIGRATE_VER || echo v3.3.0)"
+MIGRATE_VER="$(cat $ENV_DIR/MIGRATE_VER || echo v4.1.0)"
 BIN="$CACHE_DIR/migrate-${MIGRATE_VER}"
 
 # Download binary (unless cached)
