@@ -4,6 +4,8 @@
 set -e            # fail fast
 set -o pipefail   # do not ignore exit codes when piping output
 
+MIGRATE_VER="v4.1.0"
+
 # Heroku-provided params
 BUILD_DIR="$1"
 CACHE_DIR="$2"
@@ -11,7 +13,6 @@ ENV_DIR="$3"
 
 # Setup envioronment
 DB_URI="$(cat $ENV_DIR/DB_URI)"
-MIGRATE_VER="$(cat $ENV_DIR/$MIGRATE_VER || echo v4.1.0)"
 BIN="$CACHE_DIR/migrate-${MIGRATE_VER}"
 
 # Download binary (unless cached)
