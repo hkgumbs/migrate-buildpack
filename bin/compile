@@ -23,4 +23,4 @@ then
 fi
 
 # Run migrations
-"$BIN" -path ${BUILD_DIR}/db/migrate -database ${DB_URI} up
+"$BIN" -path ${BUILD_DIR} -database ${DB_URI} up
